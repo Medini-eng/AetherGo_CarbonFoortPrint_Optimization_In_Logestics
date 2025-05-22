@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherGo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                AetherGo
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Calculate</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        
+        <p class="subtitle">Reduce your foot print for furture turtules</p>
+
+        <div class="mission-vision">
+            <img src="carbonfootprintlogo.gif" alt="Carbon Footprint Image" style="vertical-align: middle; margin-right: 10px; height: 40px;">
+            <h2>Our Mission & Vision</h2>
+            <p class="mission">🌱 Mission: Empowering sustainable travel to reduce ecological footprint.</p>
+            <p class="vision">🌍 Vision: A world where conscious choices lead to a thriving ecosystem.</p>
+        </div>
+
+        <div class="input-container">
+            <div class="input-group">
+                <label for="from">From:</label>
+                <input type="text" id="from" placeholder="Enter starting location or click on map">
+            </div>
+            <div class="input-group">
+                <label for="to">To:</label>
+                <input type="text" id="to" placeholder="Enter destination or click on map">
+            </div>
+            <div class="input-group">
+                <label for="vehicle">Vehicle Type:</label>
+                <select id="vehicle">
+                    <option value="DRIVING">Car</option>
+                    <option value="BICYCLING">Bicycle</option>
+                    <option value="TRANSIT">Public Transport</option>
+                    <option value="WALKING">Walking</option>
+                    <option value="CARGO_SMALL">Small Cargo Van (0-1 ton)</option>
+                    <option value="CARGO_MEDIUM">Medium Cargo Truck (1-3 tons)</option>
+                    <option value="CARGO_LARGE">Large Cargo Truck (3-5 tons)</option>
+                    <option value="CARGO_REF">Refrigerated Cargo (0-2 tons)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="cargoWeight">Cargo Weight (kg):</label>
+                <input type="number" id="cargoWeight" placeholder="Enter cargo weight in kg" value="0" min="0">
+            </div>
+            <div class="input-group">
+                <label>Route Options:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showAlternatives" checked>
+                    <label for="showAlternatives">Show Alternative Routes</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="avoidHighways">
+                    <label for="avoidHighways">Avoid Highways</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="avoidTolls">
+                    <label for="avoidTolls">Avoid Tolls</label>
+                </div>
+            </div>
+            <button id="findRoute">Find Route</button>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+            <div id="routeInfo" class="route-info">
+                <h3>Route Information</h3>
+                <div id="weatherInfo" class="weather-info">
+                    <h4>Weather Conditions</h4>
+                    <div id="weatherDetails"></div>
+                </div>
+                <div id="routeDetails"></div>
+            </div>
+            <div class="chat-container">
+                <div class="chat-box" id="chatBox">
+                    <div class="chat-message bot">Hello! Ask me about routes or weather.</div>
+                </div>
+                <input type="text" id="chatInput" placeholder="Type a message...">
+                <button id="sendChat">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 AetherGo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.5.1"></script>
+    <script src="ml_model.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBobXcuUZASeR_hFSjexA2gXKM09vnEmQo&callback=initMap&libraries=places"></script>
+</body>
+</html> 

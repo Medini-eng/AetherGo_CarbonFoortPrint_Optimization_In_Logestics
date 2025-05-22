@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoRoute Navigator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --background-color: #f5f6fa;
+            --card-background: #ffffff;
+            --text-color: #2c3e50;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .info-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .map-container {
+            height: 400px;
+            margin-top: 20px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .weather-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .weather-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .weather-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .emissions-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .emission-item {
+            text-align: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .emission-value {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .model-performance {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .performance-metric {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        .performance-value {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>EcoRoute Navigator</h1>
+            <p>Smart Route Planning with Environmental Impact Analysis</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h2>Route Information</h2>
+                <div id="route-details"></div>
+            </div>
+
+            <div class="card">
+                <h2>Weather Conditions</h2>
+                <div class="weather-info" id="weather-details"></div>
+            </div>
+
+            <div class="card">
+                <h2>Environmental Impact</h2>
+                <div class="emissions-info" id="emissions-details"></div>
+            </div>
+
+            <div class="card">
+                <h2>Model Performance</h2>
+                <div class="model-performance" id="model-performance"></div>
+            </div>
+        </div>
+
+        <div class="map-container" id="map"></div>
+    </div>
+
+    <script>
+        function updateDisplay(data) {
+            // Update Route Details
+            const routeDetails = document.getElementById('route-details');
+            routeDetails.innerHTML = `
+                <div class="info-item">
+                    <span class="info-label">Source:</span> ${data.source}
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Destination:</span> ${data.destination}
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Distance:</span> ${data.distance.toFixed(2)} km
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Duration:</span> ${data.duration.toFixed(0)} minutes
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Recommended Route:</span> ${data.route}
+                </div>
+            `;
+
+            // Update Weather Information
+            const weatherDetails = document.getElementById('weather-details');
+            weatherDetails.innerHTML = `
+                <div class="weather-card">
+                    <h3>Source (${data.source})</h3>
+                    <div class="weather-icon">${getWeatherIcon(data.weather_source.condition)}</div>
+                    <div>${data.weather_source.temperature}°C</div>
+                    <div>${data.weather_source.condition}</div>
+                    <div>Humidity: ${data.weather_source.humidity}%</div>
+                    <div>Wind: ${data.weather_source.wind_speed} m/s</div>
+                </div>
+                <div class="weather-card">
+                    <h3>Destination (${data.destination})</h3>
+                    <div class="weather-icon">${getWeatherIcon(data.weather_destination.condition)}</div>
+                    <div>${data.weather_destination.temperature}°C</div>
+                    <div>${data.weather_destination.condition}</div>
+                    <div>Humidity: ${data.weather_destination.humidity}%</div>
+                    <div>Wind: ${data.weather_destination.wind_speed} m/s</div>
+                </div>
+            `;
+
+            // Update Emissions Information
+            const emissionsDetails = document.getElementById('emissions-details');
+            emissionsDetails.innerHTML = `
+                <div class="emission-item">
+                    <div class="emission-value">${data.emissions.toFixed(2)} kg</div>
+                    <div>CO₂ Emissions</div>
+                </div>
+                <div class="emission-item">
+                    <div class="emission-value">${data.cargo_type}</div>
+                    <div>Impact Factor</div>
+                </div>
+                <div class="emission-item">
+                    <div class="emission-value">${data.distance.toFixed(2)} km</div>
+                    <div>Distance</div>
+                </div>
+                <div class="emission-item">
+                    <div class="emission-value">${data.weight} kg</div>
+                    <div>Weight</div>
+                </div>
+            `;
+
+            // Update Model Performance
+            const modelPerformance = document.getElementById('model-performance');
+            modelPerformance.innerHTML = `
+                <div class="performance-metric">
+                    <div class="performance-value">${data.model_r2.toFixed(4)}</div>
+                    <div>R² Score</div>
+                </div>
+                <div class="performance-metric">
+                    <div class="performance-value">${data.model_rmse.toFixed(4)}</div>
+                    <div>RMSE</div>
+                </div>
+            `;
+
+            // Initialize Map
+            initMap(data.coordinates);
+        }
+
+        function getWeatherIcon(condition) {
+            const icons = {
+                'Clear': '☀️',
+                'Clouds': '☁️',
+                'Rain': '🌧️',
+                'Snow': '❄️',
+                'Thunderstorm': '⛈️'
+            };
+            return icons[condition] || '🌡️';
+        }
+
+        function initMap(coordinates) {
+            const map = L.map('map').setView([coordinates.source[0], coordinates.source[1]], 5);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add markers
+            L.marker(coordinates.source).addTo(map)
+                .bindPopup('Source')
+                .openPopup();
+            L.marker(coordinates.destination).addTo(map)
+                .bindPopup('Destination');
+
+            // Add route line
+            if (coordinates.route) {
+                L.polyline(coordinates.route, {
+                    color: '#2ecc71',
+                    weight: 5
+                }).addTo(map);
+            } else {
+                L.polyline([coordinates.source, coordinates.destination], {
+                    color: '#2ecc71',
+                    weight: 5
+                }).addTo(map);
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script>
+        // Load route data when page loads
+        window.addEventListener('load', function() {
+            fetch('route_data.json')
+                .then(response => response.json())
+                .then(data => {
+                    updateDisplay(data);
+                })
+                .catch(error => {
+                    console.error('Error loading route data:', error);
+                    document.body.innerHTML = '<div class="container"><div class="header"><h1>Error</h1><p>Could not load route data. Please try again.</p></div></div>';
+                });
+        });
+    </script>
+</body>
+</html> 

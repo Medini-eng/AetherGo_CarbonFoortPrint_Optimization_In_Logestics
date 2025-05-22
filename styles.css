@@ -1,0 +1,364 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50; /* Green header */
+    color: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: #c8e6c9; /* Lighter green on hover */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Add horizontal padding */
+}
+
+.main-content {
+    padding: 20px 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.input-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #4CAF50; /* Green focus border */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.map-container {
+    display: flex;
+    gap: 20px;
+    /* Allow map and chat to wrap on smaller screens */
+    flex-wrap: wrap;
+}
+
+#map {
+    flex: 2; /* Map takes more space */
+    min-width: 400px; /* Minimum width before wrapping */
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.route-info {
+    flex: 1; /* Route info takes less space */
+    min-width: 300px; /* Minimum width before wrapping */
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.route-info h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.route-details {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.route-details:hover {
+    background-color: #f0f0f0;
+    border-color: #a0a0a0;
+}
+
+.route-details h4 {
+    color: #4CAF50;
+    margin-bottom: 5px;
+}
+
+.route-details p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.best-route {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+    position: relative;
+}
+
+/* Optional: Add a small indicator for the best route */
+/*
+.best-route::before {
+    content: '✨';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1.2em;
+    color: #2e7d32;
+}
+*/
+
+.weather-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #007bff;
+}
+
+.weather-info h4 {
+    margin: 0 0 10px 0;
+    color: #007bff;
+}
+
+.weather-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.weather-condition {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.weather-warning {
+    color: #dc3545;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.weather-safe {
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.chat-container {
+    flex: 1; /* Chat takes available space */
+    min-width: 300px; /* Minimum width before wrapping */
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: white;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInChat 0.5s ease-out forwards 0.5s;
+}
+
+@keyframes fadeInChat {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-box {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-message {
+    max-width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.chat-message.user {
+    align-self: flex-end;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.chat-message.bot {
+    align-self: flex-start;
+    background-color: #e9e9eb;
+    color: #333;
+}
+
+.chat-container input[type="text"] {
+    border-top: 1px solid #ddd;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.chat-container button {
+    width: auto;
+    padding: 10px 15px;
+    border-radius: 0;
+    background-color: #007bff;
+}
+
+.chat-container button:hover {
+    background-color: #0056b3;
+}
+
+.mission-vision {
+    background-color: #e8f5e9; /* Light green background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.mission-vision h2 {
+    color: #2e7d32; /* Darker green for heading */
+    margin-bottom: 15px;
+}
+
+.mission-vision p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.mission-vision p:hover {
+    color: #4CAF50;
+    transform: translateX(5px);
+}
+
+.mission-vision p.vision {
+    margin-bottom: 0;
+}
+
+footer {
+    background-color: #333; /* Dark footer */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 30px;
+}
+
+footer p {
+    margin: 0;
+} 
